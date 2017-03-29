@@ -2,9 +2,6 @@ var utils = require('../utils');
 var finput = './find-the-running-median/input.txt';
 var foutput = './find-the-running-median/output.txt';
 
-var input = [12,4,5,3,8,7, 1, 2] // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-var input_i = 0;
-
 function readLine() {
     return input[input_i++];
 }
@@ -35,8 +32,7 @@ function HeapSort(input) {
     return input;
 }
 
-function MaxHeapify(input, heapSize, index)
-{
+function MaxHeapify(input, heapSize, index) {
     let left = (index + 1) * 2 - 1;
     let right = (index + 1) * 2;
     let largest = index;
@@ -101,18 +97,6 @@ function heapSort(array){
         maxHeapify(array, 0, heapSize);
     }
 }
- 
-function dump(arr) {
-    console.log(arr.join(' '))
-}
-
-function print(res, arr) {
-    var str = res.toString();
-    if (str.indexOf('.') == -1) str += '.0';
-    //console.log(str + ' - ' + arr.join(' '));
-    //console.log(str);
-    utils.writeOutput(foutput, str);
-}
 
 function saveOutput(output) {
     utils.clearOutput(foutput);
@@ -133,96 +117,31 @@ function putOutput(a) {
         var e1 = a[len / 2];
         var e2 = a[len / 2 - 1];
         var res = (parseFloat(e1) + parseFloat(e2)) / 2;
-        output.push(res)
+        output.push(res.toFixed(1));
     }
     else {
-        output.push(a[(len - 1) / 2])
+        output.push(parseFloat(a[(len - 1) / 2]).toFixed(1));
     }
 }
 
+//var input = [6,12,4,5,3,8,7];
+var input = utils.readInputArray(finput);
 var output = [];
 
 function main() {
     var start = new Date();
-    var array = utils.readInputArray(finput);
-    array.splice(0, 1); // remove very first n
-    array = array.map(Number);
-
-    heapSort(array);
-    putOutput(array);
-    saveOutput(output);
     
-    //console.log(array.length);
+    input.splice(0, 1); // remove very first n
+    input = input.map(Number);
 
-    // utils.readInput(finput, (line) => {
-    //     //if (i > 10) return;
-    //     if (i > n) return;
-    //     if (i != 0) {
-    //         //a[j++] = parseInt(line);
-    //         j++;
+    for (var s = 1; s <= input.length; s++) {
+        var array = input.slice(0, s);
+        heapSort(array);
+        putOutput(array);
+        printProgress(s + '');
+    }
 
-    //         a.push(parseInt(line));
-    //         //MaxHeapify(a, a.length, j);
-    //         a.sort((a1, a2) => { return a1 > a2})
-
-    //         var len = a.length;
-        
-    //         if (len % 2 == 0) {
-    //             var e1 = a[len / 2];
-    //             var e2 = a[len / 2 - 1];
-    //             var res = (parseFloat(e1) + parseFloat(e2)) / 2;
-    //             //print(res, a);
-    //             output.push(res)
-    //         }
-    //         else {
-    //             //print(a[(len - 1) / 2], a);
-    //             output.push(a[(len - 1) / 2])
-    //         }
-
-    //         printProgress(j + '');
-    //     }
-    //     else {
-    //         n = parseInt(line);
-    //         console.log(`n = ${n}`);
-    //     }
-        
-    //     i++;
-
-    //     if (new Date() - start > 10000) i = n + 1;
-
-    //     if (i > n) {
-    //         var worktime = new Date() - start;
-    //         console.log('.');
-    //         console.log(`time: ${worktime}`);
-    //         console.log('saving output...');
-    //         saveOutput(output);
-    //         // console.log(output[output.length-3])
-    //         // console.log(output[output.length-2])
-    //         // console.log(output[output.length-1])
-    //         // console.log('length = ' + output.length)
-    //         console.log('done');
-    //         return;
-    //     }
-    // });
-
-    // for(var a_i = 0; a_i < n; a_i++) {
-    //    a[a_i] = parseInt(readLine());
-    //    //var b = a.slice(0);
-    //    //console.log('unsorted = ' + a.join(' '));
-    //    heapSort(a);
-    //    //dump(b)
-    //    var len = a.length;
-    //    //dump(sorted)
-    //    if (len % 2 == 0) {
-    //        var e1 = a[len / 2];
-    //        var e2 = a[len / 2 - 1];
-    //        var res = (parseFloat(e1) + parseFloat(e2)) / 2;
-    //        print(res, a);
-    //    }
-    //    else {
-    //        print(a[(len - 1) / 2], a);
-    //    }
-    // }
+    saveOutput(output);
 }
 
 module.exports = main;
